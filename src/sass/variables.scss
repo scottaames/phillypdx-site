@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import '~vuetify/src/styles/tools/_functions.sass';
+
+$heading-font-family: 'Permanent Marker', cursive !default;
+$body-font-family: 'Raleway', sans-serif !default;
+$grid-breakpoints: () !default;
+$grid-breakpoints: map-deep-merge(
+  (
+    'xs': 0,
+    'sm': 600px,
+    'md': 960px,
+    'lg': 1280px - 16px,
+    'xl': 1920px - 16px,
+  ),
+  $grid-breakpoints
+);
+$container-max-widths: () !default;
+$container-max-widths: map-deep-merge(
+  (
+    'md': map-get($grid-breakpoints, 'md') * 0.9375,
+    'lg': map-get($grid-breakpoints, 'lg') * 0.9375,
+    'xl': map-get($grid-breakpoints, 'xl') * 0.875,
+  ),
+  $container-max-widths
+);
