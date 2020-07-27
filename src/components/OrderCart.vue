@@ -3,7 +3,7 @@
     <v-card class="fixed-center__child" elevation="4">
       <v-toolbar
         color="grey darken-4"
-        class="text-center font-weight-bold text-center"
+        class="toolbar-center font-weight-bold center"
         flat
         dark
         style="height:64px;font-size:1.2rem;line-height:1.5rem;"
@@ -15,10 +15,13 @@
         <v-list-item>
           <v-list-item-title class="mx-6 font-weight-bold text-body-1">
             <v-row justify="space-between" align="center" dense>
-              <v-col class="text-right" cols="auto">
+              <v-col class="text-left" cols="7">
                 Item
               </v-col>
-              <v-col class="text-left" cols="auto">
+              <v-col class="ml-2 text-center" cols="auto">
+                Qty
+              </v-col>
+              <v-col class="text-right" cols="3">
                 Price
               </v-col>
             </v-row>
@@ -26,7 +29,7 @@
         </v-list-item>
 
         <v-divider class="grey lighten-1"></v-divider>
-        <div v-if="totalPrice === 0">
+        <div v-if="cartPrice === 0">
           <v-list-item>
             <v-row class="py-5" justify="center" align="center">
               <div class=" text-subtitle-1">
@@ -37,7 +40,7 @@
           <v-divider class="grey lighten-1"></v-divider>
         </div>
         <v-slide-y-reverse-transition
-          v-show="totalPrice > 0"
+          v-show="cartPrice > 0"
           class="py-0"
           origin="bottom center 0"
           group
@@ -54,19 +57,22 @@
                     style="font-weight:600"
                     no-gutters
                   >
-                    <v-col cols="10">
+                    <v-col class="text-left" cols="7">
                       {{ item.name }}
                     </v-col>
-                    <v-col cols="2" class="text-right" style="font-weight:600">
-                      {{ formatPrice(item.price) }}
-                      <v-btn x-small icon @click="removeFromCart(index)">
+                    <v-col cols="2" class="text-center" style="font-weight:600">
+                      {{ item.quantity }}
+                    </v-col>
+                    <v-col cols="3" class="text-right" style="font-weight:600">
+                      {{ formatPrice(item.price * item.quantity) }}
+                      <v-btn x-small icon @click="removeFromCart(item)">
                         <v-icon color="red darken-1" small>mdi-delete</v-icon>
                       </v-btn>
                     </v-col>
                   </v-row>
                 </v-list-item-title>
                 <v-subheader
-                  v-if="item.addOns.length"
+                  v-if="item.addOns.length > 0"
                   style="height:fit-content;font-weight:500"
                   class="pl-2 my-0 text-caption grey--text text--darken-4 font-italic"
                   >Add-ons</v-subheader
@@ -74,10 +80,11 @@
                 <v-list-item-subtitle
                   v-for="(addOn, index) in item.addOns"
                   :key="index + 200"
+                  class="text-caption grey--text text--darken-2"
                 >
                   <v-row justify="space-around" align="end" no-gutters>
                     <v-col cols="8">
-                      {{ addOn.name }}
+                      {{ addOn.name + ' x ' + 1 }}
                     </v-col>
                     <v-col cols="2" class="text-right">
                       <v-icon x-small>mdi-plus</v-icon>
@@ -91,7 +98,11 @@
                   class="pl-2 my-0 text-caption grey--text text--darken-4 font-italic"
                   >Without</v-subheader
                 >
-                <v-list-item-subtitle v-for="item in item.without" :key="item">
+                <v-list-item-subtitle
+                  v-for="item in item.without"
+                  :key="item"
+                  class="text-caption grey--text text--darken-2"
+                >
                   <v-row justify="space-around" align="end" no-gutters>
                     <v-col cols="11">
                       {{ item }}
@@ -118,9 +129,9 @@
                 <v-fade-transition leave-absolute>
                   <span
                     class="transition-fast-out-slow-in"
-                    :key="`total-${totalPrice}`"
+                    :key="`total-${cartPrice}`"
                   >
-                    {{ formatPrice(totalPrice) }}
+                    {{ formatPrice(cartPrice) }}
                   </span>
                 </v-fade-transition>
               </v-col>
@@ -150,9 +161,9 @@
                 <v-fade-transition leave-absolute>
                   <span
                     class="transition-fast-out-slow-in"
-                    :key="`total-${totalPrice}`"
+                    :key="`total-${cartPrice}`"
                   >
-                    {{ formatPrice(totalPrice) }}
+                    {{ formatPrice(cartPrice) }}
                   </span>
                 </v-fade-transition>
               </v-col>
@@ -165,43 +176,32 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
-  props: {
-    price: {
-      type: Number,
-      required: true,
-    },
-  },
   methods: {
     formatPrice(amount) {
       return new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
-      }).format(amount.toFixed(2))
+      }).format(amount)
     },
-    removeFromCart(index) {
+    removeFromCart(item) {
       this.$nextTick(() => {
-        this.$store.dispatch('removeFromCart', index)
+        this.$store.dispatch('removeFromCart', item)
       })
     },
-  },
-  watch: {
-    price: 'totalPrice',
   },
   computed: {
-    totalPrice() {
-      let total = 0
-      this.$store.getters.cart.forEach((item) => {
-        total += item.price
-      })
-      this.$emit('update:price', total)
-      return total
-    },
+    ...mapGetters(['cartPrice']),
   },
 }
 </script>
 
 <style lang="scss">
+.toolbar-center .v-toolbar__content {
+  justify-content: center;
+}
+
 @media screen and (min-width: 961px) {
   .fixed-center {
     position: fixed;

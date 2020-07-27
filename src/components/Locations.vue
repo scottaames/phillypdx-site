@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center">
     <v-col class="text-center py-5" cols="12">
-      <h1 class="display-3">Locations</h1>
+      <h1 class="display-1">Locations</h1>
     </v-col>
     <v-col
       cols="12"

@@ -1,5 +1,13 @@
 <template>
   <v-container style="max-width:90%" class="fill-height" fluid>
+    <v-snackbar centered v-model="snackbar" multi-line timeout="-1">
+      <template v-slot:action="{ attrs }">
+        <v-btn color="red" icon text v-bind="attrs" @click="snackbar = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+      {{ error }}
+    </v-snackbar>
     <v-row align="center" justify="space-between">
       <v-col cols="12" md="8" order="2" order-md="1">
         <v-stepper vertical v-model="step">
@@ -50,6 +58,7 @@
                     <v-card-text>
                       <Menu />
                     </v-card-text>
+
                     <v-card-actions>
                       <v-spacer></v-spacer>
                       <v-btn
@@ -62,29 +71,11 @@
                       <v-btn
                         class="font-weight-bold mr-5"
                         color="secondary"
-                        @click="totalPrice > 0 ? step++ : (snackbar = true)"
+                        depressed
+                        @click="cartPrice > 0 ? step++ : (snackbar = true)"
                       >
                         Checkout
                       </v-btn>
-                      <v-snackbar
-                        centered
-                        vertical
-                        v-model="snackbar"
-                        multi-line
-                        timeout="-1"
-                      >
-                        Please add something to your cart to continue
-                        <template v-slot:action="{ attrs }">
-                          <v-btn
-                            color="red"
-                            text
-                            v-bind="attrs"
-                            @click="snackbar = false"
-                          >
-                            Close
-                          </v-btn>
-                        </template>
-                      </v-snackbar>
                     </v-card-actions>
                   </v-card>
                 </v-col>
@@ -93,24 +84,37 @@
           </v-stepper-content>
 
           <v-stepper-step
-            :color="step > 2 ? 'secondary' : 'primary'"
+            :color="step > 2 ? 'success' : 'primary'"
             :complete="step > 2"
             step="2"
           >
             Order information
           </v-stepper-step>
           <v-stepper-content step="2">
-            <PurchaseForm
-              v-bind:price.sync="totalPrice"
-              v-bind:currentStep.sync="step"
-              :location="location"
-            />
+            <OrderForm v-bind:currentStep.sync="step" :location="location" />
           </v-stepper-content>
 
-          <v-stepper-step :complete="step > 3" step="3"
-            >Verify order</v-stepper-step
+          <v-stepper-step
+            :color="step > 3 ? 'success' : 'primary'"
+            :complete="step > 3"
+            step="3"
+            >Payment</v-stepper-step
           >
-          <v-stepper-content step="3"></v-stepper-content>
+          <v-stepper-content step="3">
+            <v-container>
+              <v-skeleton-loader
+                :loading="loading"
+                width="75%"
+                class="mx-auto"
+                height="100%"
+                type="card-heading, list-item-threeline, list-item-twoline, list-item-threeline, divider, card-heading, list-item, list-item-threeline, list-item, list-item, divider, card-heading, list-item, list-item-threeline, list-item-two-line, divider, card-heading, list-item-threeline, list-item, list-item-threeline, actions"
+              >
+                <v-card class="mx-auto">
+                  <OrderDetails />
+                </v-card>
+              </v-skeleton-loader>
+            </v-container>
+          </v-stepper-content>
 
           <v-stepper-step :complete="step > 4" step="4">
             Order summary
@@ -119,40 +123,55 @@
         </v-stepper>
       </v-col>
       <v-col cols="12" md="4" order="1" order-md="2">
-        <OrderCart v-bind:price.sync="totalPrice" />
+        <OrderCart />
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import PurchaseForm from '@/components/PurchaseForm.vue'
+import { mapGetters } from 'vuex'
+import OrderForm from '@/components/OrderForm.vue'
 import Menu from '@/components/Menu.vue'
 import OrderCart from '@/components/OrderCart.vue'
+import OrderDetails from '@/components/OrderDetails.vue'
 export default {
   components: {
     Menu,
     OrderCart,
-    PurchaseForm,
+    OrderForm,
+    OrderDetails,
   },
   props: {
     location: {
       type: String,
-      default: '',
+      required: true,
     },
   },
+
   data() {
     return {
+      lineItems: [],
       snackbar: false,
+      loading: false,
       step: 2,
       steps: 5,
       panel: 0,
-      totalPrice: 0,
-      stripePubKey:
-        'pk_test_51H5aZsCi1r1wf8UMSJCQLQhHPaNtc9jt3VEsMMHj9DufRFL9e2fI805KErKibXs52ePuCvkyxF5s12zEwnGnPGhe00LkHpfuFb',
+      error: 'Please add at least one item to your cart to continue.',
     }
   },
-  methods: {},
+  watch: {},
+  methods: {
+    createLineItems() {
+      this.cart.forEach((product) => {
+        let item = {}
+        item.price = product.price
+        item.quantity = product.quantity
+        this.lineitems.push(item)
+      })
+    },
+  },
+
   computed: {
     locationNames() {
       let names = []
@@ -161,6 +180,7 @@ export default {
       })
       return names
     },
+    ...mapGetters(['cartPrice', 'cart']),
   },
 }
 </script>

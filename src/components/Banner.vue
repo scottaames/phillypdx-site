@@ -1,9 +1,10 @@
 <template>
-  <v-window :reverse="reverseLast" v-model="window" class="ma-0 pa-0">
+  <v-window :reverse="window === 0" v-model="window" class="ma-0 pa-0">
     <v-window-item
       continuous
       class="ma-0 pa-0"
       v-for="(image, index) in images"
+      transition="fade-transition"
       :key="`card-${index}`"
     >
       <v-card
@@ -23,7 +24,7 @@
       absolute
     >
       <div>
-        <h1 class="text-h1 mt-2 shadowed">Welcome to</h1>
+        <h1 class="display-4 mt-2 shadowed font-weight-medium">Welcome to</h1>
         <v-img
           height="225"
           contain
@@ -55,9 +56,6 @@ export default {
   computed: {
     getWindowHeight() {
       return window.innerHeight - 64
-    },
-    reverseLast() {
-      return this.window === 0
     },
   },
   data: () => ({

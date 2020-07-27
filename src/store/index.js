@@ -7,7 +7,18 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: () => ({
     menu: [],
+    cartPrice: 0,
     cart: [],
+    lineItems: [],
+    orderDetails: {
+      name: 'Scott Ames',
+      phone: '(951) 541-1070',
+      email: 'scottaames@gmail.com',
+      orderMethod: 'Pick-up',
+      day: 'Today',
+      time: '12:36 PM',
+      instructions: 'Make sure to leave off the onions please!',
+    },
     locations: [
       {
         name: 'Sisters',
@@ -81,16 +92,55 @@ export default new Vuex.Store({
     SET_MENU(state, menu) {
       state.menu = menu
     },
+    SET_ORDER_DETAILS(state, orderDetails) {
+      state.orderDetails = orderDetails
+    },
     ADD_TO_CART(state, item) {
+      let repeats = state.cart.filter((cartItem) => cartItem.name === item.name)
+      let isRepeat = true
+      if (repeats.length > 0) {
+        let i = 0
+        while (i < repeats.length) {
+          if (repeats[i].price === item.price) {
+            if (
+              repeats[i].addOns != null &&
+              item.addOns != null &&
+              repeats[i].addOns.length === item.addOns.length &&
+              repeats[i].without.length === item.without.length
+            ) {
+              item.addOns.forEach((addOn, index) => {
+                if (addOn.name !== repeats[i].addOns[index].name) {
+                  isRepeat = false
+                }
+              })
+              item.without.forEach((withoutItem, index) => {
+                if (withoutItem.name !== repeats[i].without[index].name) {
+                  isRepeat = false
+                }
+              })
+            }
+            if (isRepeat) {
+              let idx = state.cart.indexOf(repeats[i])
+              state.cart[idx].quantity += item.quantity
+              return
+            }
+          }
+        }
+      }
       state.cart.push(item)
     },
-    REMOVE_FROM_CART(state, itemIdx) {
-      if (itemIdx >= 0) {
-        state.cart.splice(itemIdx, 1)
-      }
+    REMOVE_FROM_CART(state, item) {
+      let itemIdx = state.cart.indexOf(item)
+      state.cart.splice(itemIdx, 1)
     },
     CLEAR_CART(state) {
       state.cart = []
+    },
+    ADD_CART_PRICE(state, amount) {
+      state.cartPrice += amount
+    },
+    SUBTRACT_CART_PRICE(state, amount) {
+      state.cartPrice -= amount
     },
   },
   actions: {
@@ -103,14 +153,26 @@ export default new Vuex.Store({
           console.log('Error fetching menu: ', error.response)
         })
     },
-    addToCart({ commit }, item) {
-      if (item) commit('ADD_TO_CART', item)
+
+    addToCart({ dispatch, commit }, item) {
+      commit('ADD_TO_CART', item)
+      dispatch('addCartPrice', item.price)
     },
-    removeFromCart({ commit }, itemIdx) {
-      commit('REMOVE_FROM_CART', itemIdx)
+    removeFromCart({ dispatch, commit }, item) {
+      commit('REMOVE_FROM_CART', item)
+      dispatch('subtractCartPrice', item.price)
     },
     clearCart({ commit }, item) {
       commit('CLEAR_CART', item)
+    },
+    addCartPrice({ commit }, amount) {
+      commit('ADD_CART_PRICE', amount)
+    },
+    subtractCartPrice({ commit }, amount) {
+      commit('SUBTRACT_CART_PRICE', amount)
+    },
+    setOrderDetails({ commit }, orderDetails) {
+      commit('SET_ORDER_DETAILS', orderDetails)
     },
   },
   getters: {
@@ -120,6 +182,8 @@ export default new Vuex.Store({
     westlinnHours: (state) => state.locations[2].hours,
     menu: (state) => state.menu,
     cart: (state) => state.cart,
+    cartPrice: (state) => state.cartPrice,
+    orderDetails: (state) => state.orderDetails,
   },
   modules: {},
 })

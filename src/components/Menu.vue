@@ -1,5 +1,11 @@
 <template>
-  <v-expansion-panels v-model="panel" focusable accordion class="elevation-0">
+  <v-expansion-panels
+    style="max-width:750px"
+    class="mx-auto"
+    v-model="panel"
+    focusable
+    accordion
+  >
     <v-expansion-panel
       v-for="category in this.$store.state.menu"
       :key="category.id"

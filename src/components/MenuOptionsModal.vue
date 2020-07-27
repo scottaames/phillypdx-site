@@ -107,57 +107,41 @@
               </v-col>
             </v-row>
           </v-col>
-
-          <v-col cols="12">
-            <v-row
-              no-gutters
-              justify="end"
-              class="font-weight-medium text--darken-4"
-            >
-              <v-col cols="10" sm="11" class="text-right">
-                Price w/ add-ons:
-              </v-col>
-              <v-col cols="2" sm="1" class="text-right">
-                <strong class="pl-1">{{ formatPrice(getTotalPrice) }}</strong>
-              </v-col>
-            </v-row>
-          </v-col>
         </v-row>
       </v-container>
     </v-card-text>
     <v-divider></v-divider>
-    <v-card-actions class="d-flex">
-      <v-row dense justify="space-between" align="center">
-        <v-col cols="7" class="align-self-center">
-          <v-btn text @click="$emit('update:isOpen', false)">Cancel</v-btn>
+    <v-card-actions>
+      <v-btn class="ml-2" text @click="$emit('update:isOpen', false)"
+        >Cancel</v-btn
+      >
+      <v-spacer></v-spacer>
+      <v-row no-gutters align="center" justify="end">
+        <v-col cols="3">
+          <v-text-field
+            outlined
+            dense
+            type="number"
+            :min="1"
+            :max="9"
+            v-model="quantity"
+            label="Quantity"
+            class="text-body-2 qty-input"
+            style="font-size:0.9rem"
+          >
+          </v-text-field>
         </v-col>
-        <v-col cols="5">
-          <v-row no-gutters align="center" justify="end">
-            <v-col cols="4">
-              <v-select
-                :menu-props="{ offsetY: true }"
-                outlined
-                dense
-                v-model="quantity"
-                label="Quantity"
-                class="text-body-2 qty-input"
-                :items="[1, 2, 3, 4, 5, 6, 7, 8, 9]"
-                style="font-size:0.9rem"
-              >
-              </v-select>
-            </v-col>
-            <v-col cols="3" class="ml-2">
-              <v-btn
-                depressed
-                color="secondary"
-                class="text-subtitle-2 font-weight-bold"
-                dark
-                @click="addToCart"
-              >
-                <v-icon>mdi-cart-plus</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
+        <v-col cols="auto" class="mx-2">
+          <v-btn
+            depressed
+            color="secondary"
+            class="text-subtitle-2 font-weight-bold"
+            dark
+            @click="addToCart"
+          >
+            <v-icon>mdi-cart-plus</v-icon>
+            <strong class="pl-1">{{ formatPrice(getTotalPrice) }}</strong>
+          </v-btn>
         </v-col>
       </v-row>
     </v-card-actions>
@@ -262,6 +246,7 @@ export default {
     addToCart() {
       this.$store.dispatch('addToCart', this.itemToAdd)
       this.$emit('update:isOpen', false)
+      this.extraMeatsSelected = this.extraToppingsSelected = this.withoutSelected = []
     },
   },
 }

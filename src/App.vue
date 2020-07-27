@@ -14,27 +14,17 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn active-class="yellow--text" class="text-none" to="/" active text>
+      <v-btn active-class="yellow--text" class="" to="/" active text>
         Home
       </v-btn>
-      <v-btn
-        active-class="yellow--text"
-        class="text-none mr-3"
-        to="/#locations"
-        text
-      >
+      <v-btn active-class="yellow--text" class=" mr-3" to="/#locations" text>
         Locations
       </v-btn>
 
       <!-- <v-divider vertical inset color="white" class="mr-5 ml-3"></v-divider> -->
       <v-menu open-on-hover bottom offset-y>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            v-bind="attrs"
-            v-on="on"
-            color="secondary"
-            class="mr-4 text-none"
-          >
+          <v-btn v-bind="attrs" v-on="on" color="secondary" class="mr-4 ">
             Order Online
             <v-icon>mdi-chevron-down</v-icon>
           </v-btn>

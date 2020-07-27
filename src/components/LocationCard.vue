@@ -35,44 +35,34 @@
     <v-divider class="mt-5 mb-2"></v-divider>
     <v-card-subtitle> PS&H {{ location.name }} Information </v-card-subtitle>
     <v-card-text>
-      <v-list flat class="pt-0" dense>
-        <v-list-item-group>
-          <v-list-item :href="`tel:${location.phone}`">
-            <v-list-item-icon>
-              <v-icon>mdi-phone</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-subtitle
-                v-html="location.phone"
-              ></v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item v-if="copied">
-            <v-list-item-content>
-              <v-snackbar
-                v-model="copied"
-                absolute
-                centered
-                light
-                color="grey lighten-3"
-              >
-                Copied to clipboard.
-              </v-snackbar>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item
-            active-class="grey--text text--darken-1"
-            @click="copyAddress"
-          >
-            <v-list-item-icon>
-              <v-icon>mdi-home</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-subtitle v-html="location.address">
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
+      <v-list class="pt-0" dense>
+        <v-list-item :href="`tel:${location.phone}`">
+          <v-list-item-icon>
+            <v-icon>mdi-phone</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-subtitle
+              v-html="location.phone"
+            ></v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-snackbar v-model="copied" centered>
+          Address copied to clipboard.
+        </v-snackbar>
+
+        <v-list-item
+          active-class="grey--text text--darken-1"
+          @click="copyAddress"
+        >
+          <v-list-item-icon>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-subtitle v-html="location.address">
+            </v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-card-text>
     <v-card-subtitle> PS&H {{ location.name }} Hours </v-card-subtitle>
