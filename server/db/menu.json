@@ -1,0 +1,511 @@
+{
+  "menu": [
+    {
+      "id": 1,
+      "name": "Cheesesteaks",
+      "items": [
+        {
+          "name": "Cheesesteak",
+          "description": "Thin sliced rib-eye with grilled onions, melted swiss-American cheese served on a hoagie roll.",
+          "price": 11.95,
+          "options": {
+            "extraMeats": true,
+            "extras": [
+              "Hot Peppers",
+              "Sweet Peppers",
+              "Bell Pepper",
+              "Mushroom",
+              "Extra Cheese"
+            ],
+            "without": ["Roll/Bread", "Onion", "Cheese"]
+          }
+        },
+        {
+          "name": "Mushroom Steak",
+          "description": "Thinly sliced rib-eye with grilled onion & mushrooms, melted Swiss-American cheese, served on a hoagie roll.",
+          "price": 12.95,
+          "options": {
+            "extraMeats": true,
+            "extras": [
+              "Hot Peppers",
+              "Sweet Peppers",
+              "Bell Pepper",
+              "Mushroom",
+              "Extra Cheese"
+            ],
+            "without": ["Roll/Bread", "Onion", "Cheese"]
+          }
+        },
+        {
+          "name": "Pepper Steak",
+          "description": "Thinly sliced rib-eye with grilled onion & bell peppers, melted swiss American cheese, served on a hoagie roll.",
+          "price": 12.95,
+          "options": {
+            "extraMeats": true,
+            "extras": [
+              "Hot Peppers",
+              "Sweet Peppers",
+              "Bell Pepper",
+              "Mushroom",
+              "Extra Cheese"
+            ],
+            "without": ["Roll/Bread", "Onion", "Cheese"]
+          }
+        },
+        {
+          "name": "Cheesesteak Hoagie",
+          "description": "The best of both worlds. We start with our famous cheesesteak and top it with lettuce, diced onion, salt, pepper, oregano, oil & vinegar, pickled peppers, pickles & sliced tomato.",
+          "price": 14.25,
+          "extraMeats": true,
+          "options": {
+            "extras": [
+              "Hot Peppers",
+              "Sweet Peppers",
+              "Bell Pepper",
+              "Mushroom",
+              "Extra Cheese"
+            ],
+            "peppers": ["No Peppers", "Sweets", "Hots"],
+            "without": [
+              "Roll/Bread",
+              "Onion",
+              "Cheese",
+              "Tomato",
+              "Peppers",
+              "Pickle",
+              "Oregano",
+              "Oil",
+              "Lettuce"
+            ]
+          }
+        },
+        {
+          "name": "Pizza Steak",
+          "description": "Thinly sliced rib-eye with grilled onions, melted provolone cheese & tomato sauce, served on a hoagie roll.",
+          "price": 11.95,
+          "options": {
+            "extraMeats": true,
+            "extras": [
+              "Hot Peppers",
+              "Sweet Peppers",
+              "Bell Pepper",
+              "Mushroom",
+              "Extra Cheese"
+            ],
+            "without": ["Roll/Bread", "Onion", "Cheese"]
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Hoagies",
+      "items": [
+        {
+          "name": "Italian Special",
+          "description": "Ham, genoa salami, capicola, provolone cheese, lettuce, onions, salt & pepper, oregano, oil & vinegar, pickled peppers, pickles & tomato.",
+          "price": 10.95,
+          "options": {
+            "extraMeats": false,
+            "cheese": ["Provolone", "Swiss/American"],
+            "peppers": ["No Peppers", "Sweets", "Hots"],
+            "without": [
+              "Roll/Bread",
+              "Onion",
+              "Cheese",
+              "Tomato",
+              "Peppers",
+              "Pickle",
+              "Oregano",
+              "Oil",
+              "Lettuce"
+            ]
+          }
+        },
+        {
+          "name": "Turkey",
+          "description": "Sliced turkey breast, Swiss-American cheese, mayo, lettuce & tomato.",
+          "price": 9.45,
+          "options": {
+            "extraMeats": true,
+            "cheese": ["Provolone", "Swiss/American"],
+            "without": ["Roll/Bread", "Cheese", "Tomato", "Lettuce", "Mayo"]
+          }
+        },
+        {
+          "name": "Ham & Cheese",
+          "description": "Ham, swiss-American cheese, lettuce, onions, salt & pepper, oregano, oil & vinegar, pickled peppers, pickles & tomato.",
+          "price": 9.95,
+          "options": {
+            "extraMeats": true,
+            "extras": [
+              "Hot Peppers",
+              "Sweet Peppers",
+              "Bell Pepper",
+              "Mushroom",
+              "Extra Cheese"
+            ],
+            "peppers": ["No Peppers", "Sweets", "Hots"],
+            "cheese": ["Provolone", "Swiss/American"],
+            "without": [
+              "Roll/Bread",
+              "Cheese",
+              "Tomato",
+              "Peppers",
+              "Pickle",
+              "Oregano",
+              "Oil",
+              "Onion",
+              "Lettuce"
+            ]
+          }
+        },
+        {
+          "name": "Cheese Hoagie",
+          "description": "Provolone & American-swiss cheeses, lettuce, onions, salt & pepper, oregano, oil & vinegar, pickled peppers, pickles & tomato.",
+          "price": 8.95,
+          "options": {
+            "extraMeats": false,
+            "peppers": ["No Peppers", "Sweets", "Hots"],
+            "cheese": ["Provolone", "Swiss/American"],
+            "without": [
+              "Roll/Bread",
+              "Cheese",
+              "Tomato",
+              "Peppers",
+              "Pickle",
+              "Oregano",
+              "Oil",
+              "Onion",
+              "Lettuce"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Grilled Chicken",
+      "items": [
+        {
+          "name": "Chicken Cheese",
+          "description": "Chicken & grilled onions, melted Swiss-American cheese, mayo, lettuce, tomato, served on a hoagie roll.",
+          "price": 10.95,
+          "options": {
+            "extraMeats": true,
+            "extras": [
+              "Hot Peppers",
+              "Sweet Peppers",
+              "Bell Pepper",
+              "Mushroom",
+              "Extra Cheese"
+            ],
+            "without": [
+              "Roll/Bread",
+              "Cheese",
+              "Tomato",
+              "Onion",
+              "Lettuce",
+              "Mayo"
+            ]
+          }
+        },
+        {
+          "name": "Buffalo Chick",
+          "description": "Chicken & grilled onions, Frank's buffalo sauce, melted Swiss-American cheese, served with chunky blue cheese dipping sauce.",
+          "price": 11.95,
+          "options": {
+            "extraMeats": true,
+            "extras": [
+              "Hot Peppers",
+              "Sweet Peppers",
+              "Bell Pepper",
+              "Mushroom",
+              "Extra Cheese"
+            ],
+            "peppers": ["No Peppers", "Sweets", "Hots"],
+            "cheese": ["Provolone", "Swiss/American"],
+            "without": ["Roll/Bread", "Cheese", "Buffalo Sauce", "Onion"]
+          }
+        },
+        {
+          "name": "Chick Parm",
+          "description": "Chicken & grilled onion, meltedprovolone cheese, tomato sauce & grated parmesan cheese.",
+          "price": 10.75,
+          "options": {
+            "extraMeats": true,
+            "extras": [
+              "Hot Peppers",
+              "Sweet Peppers",
+              "Bell Pepper",
+              "Mushroom",
+              "Extra Cheese"
+            ],
+            "without": ["Cheese", "Marinara", "Onion"]
+          }
+        },
+        {
+          "name": "Cordon Blue",
+          "description": "Chicken & grilled onion, ham, melted Swiss-American cheese & mustard.",
+          "price": 10.95,
+          "options": {
+            "extraMeats": true,
+            "extras": [
+              "Hot Peppers",
+              "Sweet Peppers",
+              "Bell Pepper",
+              "Mushroom",
+              "Extra Cheese"
+            ],
+            "without": ["Roll/Bread", "Cheese", "Mustard", "Onion"]
+          }
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Italian Favorites",
+      "items": [
+        {
+          "name": "Italian Sausage",
+          "description": "Italian sausage with grilled onions, melted provolone cheese & tomato sauce.",
+          "price": 10.95,
+          "options": {
+            "extraMeats": true,
+            "extras": [
+              "Hot Peppers",
+              "Sweet Peppers",
+              "Bell Pepper",
+              "Mushroom",
+              "Extra Cheese"
+            ],
+            "without": ["Roll/Bread", "Cheese", "Marinara", "Onion"]
+          }
+        },
+        {
+          "name": "Sausage & Pepper",
+          "description": "Italian sausage with grilled onions & bell pepper, melted provolone cheese, and tomato sauce.",
+          "price": 11.95,
+          "options": {
+            "extraMeats": true,
+            "extras": [
+              "Hot Peppers",
+              "Sweet Peppers",
+              "Bell Pepper",
+              "Mushroom",
+              "Extra Cheese"
+            ],
+            "without": ["Roll/Bread", "Cheese", "Marinara", "Onion"]
+          }
+        },
+        {
+          "name": "Meatball",
+          "description": "Six Italian Meatballs, melted Swiss-American cheese & tomato sauce served on a hoagie roll.",
+          "price": 11.95,
+          "options": {
+            "extraMeats": true,
+            "extras": [
+              "Hot Peppers",
+              "Sweet Peppers",
+              "Bell Pepper",
+              "Mushroom",
+              "Extra Cheese"
+            ],
+            "without": ["Roll/Bread", "Cheese", "Marinara"]
+          }
+        },
+        {
+          "name": "Veggie Parm",
+          "description": "Grilled and seasoned mushrooms, onions & bell pepper, melted provolone cheese, tomato sauce & grated parmesan.",
+          "price": 9.45,
+          "options": {
+            "extraMeats": false,
+            "extras": [
+              "Hot Peppers",
+              "Sweet Peppers",
+              "Bell Pepper",
+              "Mushroom",
+              "Extra Cheese"
+            ],
+            "without": [
+              "Roll/Bread",
+              "Cheese",
+              "Marinara",
+              "Bell Pepper",
+              "Mushroom",
+              "Onion"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Lo-Cal Choices",
+      "items": [
+        {
+          "name": "Turkey Bleu",
+          "description": "Grilled turkey breast & grilled onion, ham, melted Swiss-American cheese & mustard.",
+          "price": 10.75,
+          "options": {
+            "extraMeats": true,
+            "extras": [
+              "Hot Peppers",
+              "Sweet Peppers",
+              "Bell Pepper",
+              "Mushroom",
+              "Extra Cheese"
+            ],
+            "without": ["Roll/Bread", "Cheese", "Mustard", "Onion"]
+          }
+        },
+        {
+          "name": "Italian Turkey",
+          "description": "Sliced turkey breast, lettuce, onions, salt & pepper, oregano, oil & vinegar, pickled peppers, pickles & tomato.",
+          "price": 9.95,
+          "options": {
+            "extraMeats": true,
+            "peppers": ["No Peppers", "Sweets", "Hots"],
+            "cheese": ["Provolone", "Swiss/American"],
+            "without": [
+              "Roll/Bread",
+              "Tomato",
+              "Peppers",
+              "Pickle",
+              "Oregano",
+              "Oil",
+              "Onion",
+              "Lettuce"
+            ]
+          }
+        },
+        {
+          "name": "Grilled Turkey",
+          "description": "Grilled turkey breast, grilled onions & mushrooms, a hint of mustard.",
+          "price": 9.75,
+          "options": {
+            "extraMeats": true,
+            "extras": [
+              "Hot Peppers",
+              "Sweet Peppers",
+              "Bell Pepper",
+              "Mushroom",
+              "Extra Cheese"
+            ],
+            "without": ["Roll/Bread", "Mustard", "Mushroom", "Onion"]
+          }
+        },
+        {
+          "name": "Turkey & Tomato",
+          "description": "Sliced turkey breast, heavy sliced tomato & light mayo.",
+          "price": 9.25,
+          "options": {
+            "extraMeats": true,
+            "without": ["Roll/Bread", "Tomato", "Lettuce", "Mayo"]
+          }
+        },
+        {
+          "name": "Grilled Veggie",
+          "description": "Grilled and seasoned mushrooms, onions & bell peppers, melted provolone cheese & sliced tomato.",
+          "price": 8.95,
+          "options": {
+            "extraMeats": false,
+            "extras": [
+              "Hot Peppers",
+              "Sweet Peppers",
+              "Bell Pepper",
+              "Mushroom",
+              "Extra Cheese"
+            ],
+            "without": [
+              "Roll/Bread",
+              "Cheese",
+              "Tomato",
+              "Bell Peppers",
+              "Mushroom",
+              "Onion"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Kids",
+      "items": [
+        {
+          "name": "Kids Hot Dog",
+          "description": "",
+          "price": 3.45,
+          "options": null
+        },
+        {
+          "name": "Kids Ham & Cheese",
+          "description": "",
+          "price": 4.4,
+          "options": null
+        },
+        {
+          "name": "Kids Chick Pizza",
+          "description": "",
+          "price": 5.0,
+          "options": null
+        },
+        {
+          "name": "Kids Cheesesteak",
+          "description": "",
+          "price": 5.0,
+          "options": null
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Sides",
+      "items": [
+        {
+          "name": "Chips",
+          "description": "",
+          "price": 1.85,
+          "options": null
+        },
+        {
+          "name": "Potato Salad",
+          "description": "",
+          "price": 2.0,
+          "options": null
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Drinks",
+      "items": [
+        {
+          "name": "Coke",
+          "description": "",
+          "price": 1.85,
+          "options": null
+        },
+        {
+          "name": "Coffee",
+          "description": "",
+          "price": 2.5,
+          "options": null
+        },
+        {
+          "name": "Kids Coke",
+          "description": "",
+          "price": 1.0,
+          "options": null
+        },
+        {
+          "name": "Bottled Water",
+          "description": "",
+          "price": 1.0,
+          "options": null
+        }
+      ]
+    }
+  ]
+}
