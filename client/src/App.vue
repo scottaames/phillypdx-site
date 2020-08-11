@@ -1,17 +1,14 @@
 <template>
   <v-app id="inspire">
-    <transition v-if="isOrder" name="fade-delay">
-      <OrderCartNew />
-    </transition>
     <v-app-bar app expanded color="grey darken-4" dark style="z-index:5;" flat>
       <router-link to="/">
         <v-img
           alt="Vuetify Logo"
-          class="mr-2"
+          class="shrink mr-2"
           contain
           src="http://phillypdx.net/wp-content/uploads/2020/01/8723604.png"
-          height="55"
-          width="75"
+          height="62"
+          width="90"
         />
       </router-link>
 
@@ -83,21 +80,8 @@
 </template>
 
 <script>
-import OrderCartNew from '@/components/OrderCartNew.vue'
 export default {
   name: 'App',
-  components: {
-    OrderCartNew,
-  },
-  computed: {
-    isOrder() {
-      if (this.$route.name === 'order') {
-        return true
-      } else {
-        return false
-      }
-    },
-  },
 }
 </script>
 

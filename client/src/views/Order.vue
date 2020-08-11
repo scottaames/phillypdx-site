@@ -1,29 +1,22 @@
 <template>
-  <v-container class="fill-height mx-auto" style="max-width: 90%">
+  <v-container class="fill-height mx-auto" style="">
     <Loader />
 
-    <v-snackbar
-      vertical
-      app
-      centered
-      content-class="text-subtitle-1"
-      v-model="snackbar"
-      light
-      timeout="-1"
-    >
+    <v-snackbar vertical app centered v-model="snackbar" light timeout="-1">
       <template v-slot:action="{ attrs }">
-        <v-btn
-          color="red"
-          class="mr-3"
-          text
-          v-bind="attrs"
-          @click="snackbar = false"
-        >
+        <v-btn color="red" text v-bind="attrs" @click="snackbar = false">
           Close
         </v-btn>
       </template>
       {{ error }}
     </v-snackbar>
+    <transition
+      v-if="isOrder && !this.$vuetify.breakpoint.mobile"
+      name="fade-delay"
+    >
+      <OrderCart />
+    </transition>
+    <OrderCartMobile v-if="isOrder && this.$vuetify.breakpoint.mobile" />
     <v-row align="center" justify="center">
       <v-col cols="12" md="10" lg="8">
         <v-stepper vertical v-model="step" class="elevation-8">
@@ -33,7 +26,7 @@
             step="1"
             >Choose your meal</v-stepper-step
           >
-          <v-stepper-content step="1">
+          <v-stepper-content class="pl-2 pr-11" step="1">
             <v-container fluid>
               <v-row
                 no-gutters
@@ -70,8 +63,8 @@
 
               <v-row justify="center" no-gutters align="center">
                 <v-col cols="12">
-                  <v-card flat>
-                    <v-card-text class="px-0 px-sm-5">
+                  <v-card flat min-width="200" class="mx-auto" max-width="900">
+                    <v-card-text class="px-0 px-sm-4">
                       <Menu />
                     </v-card-text>
 
@@ -85,7 +78,7 @@
                         >Back</v-btn
                       >
                       <v-btn
-                        class="font-weight-bold mr-5"
+                        class="font-weight-bold mr-sm-5"
                         color="secondary"
                         depressed
                         @click="cartPrice > 0 ? step++ : (snackbar = true)"
@@ -133,9 +126,6 @@
           </v-stepper-content>
         </v-stepper>
       </v-col>
-      <!-- <v-col cols="12" sm="4" order="1" order-md="2">
-        <OrderCart />
-      </v-col> -->
     </v-row>
   </v-container>
 </template>
@@ -144,14 +134,16 @@
 import { cartPrice, cart } from '@/store/helpers'
 import OrderForm from '@/components/OrderForm.vue'
 import Menu from '@/components/Menu.vue'
-//import OrderCart from '@/components/OrderCart.vue'
+import OrderCart from '@/components/OrderCart.vue'
+import OrderCartMobile from '@/components/OrderCartMobile.vue'
 import OrderDetails from '@/components/OrderDetails.vue'
 import Loader from '@/components/Loader.vue'
 
 export default {
   components: {
     Menu,
-    //OrderCart,
+    OrderCartMobile,
+    OrderCart,
     OrderForm,
     OrderDetails,
     Loader,
@@ -193,6 +185,9 @@ export default {
         names.push(location.name)
       })
       return names
+    },
+    isOrder() {
+      return this.$route.name === 'order'
     },
     ...cartPrice,
     ...cart,

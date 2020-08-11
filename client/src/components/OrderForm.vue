@@ -1,9 +1,9 @@
 <template>
   <v-container>
-    <v-card max-width="750" class="mx-auto">
+    <v-card max-width="850" class="mx-auto">
       <v-form ref="form" lazy-validation v-model="valid">
         <v-card-subtitle
-          class="ml-2 grey--text text--darken-2 font-weight-bold pb-0"
+          class="ml-2 grey--text text--darken-2 font-weight-bold pb-sm-0"
         >
           CONTACT
         </v-card-subtitle>
@@ -49,9 +49,9 @@
         >
           ORDER METHOD
         </v-card-subtitle>
-        <v-card-text class="pb-1">
+        <v-card-text class="pb-0">
           <v-row
-            no-gutters
+            dense
             class="mx-auto"
             style="max-width:225px;"
             justify="space-between"
@@ -72,7 +72,7 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card-subtitle
-          class="ml-2 grey--text text--darken-2 font-weight-bold pb-0"
+          class="ml-2 grey--text text--darken-2 font-weight-bold pb-sm-0"
         >
           ORDER TIME
         </v-card-subtitle>
@@ -136,7 +136,7 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card-subtitle
-          class="ml-2 grey--text text--darken-2 font-weight-bold pb-0"
+          class="ml-2 grey--text text--darken-2 font-weight-bold pb-sm-0"
         >
           TIP
         </v-card-subtitle>
@@ -173,7 +173,7 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card-subtitle
-          class="ml-2 grey--text text--darken-2 font-weight-bold pb-2"
+          class="ml-2 grey--text text--darken-2 font-weight-bold "
         >
           SPECIAL INSTRUCTIONS
         </v-card-subtitle>
@@ -190,12 +190,12 @@
       <v-divider></v-divider>
 
       <v-card-subtitle
-        class="ml-2 grey--text text--darken-2 font-weight-bold pb-2"
+        class="ml-2 grey--text text--darken-2 font-weight-bold pb-sm-2"
       >
         PAYMENT
       </v-card-subtitle>
 
-      <v-card-text class="px-sm-8 pt-1 pb-0">
+      <v-card-text class="px-sm-8 pt-1 ">
         <v-stripe-card
           outlined
           ref="stripeCard"
@@ -326,7 +326,6 @@ export default {
   }),
   watch: {
     selectedTime: 'formatTimeInput',
-    //cartPrice: 'getTip',
   },
   methods: {
     async processCard() {
@@ -375,18 +374,6 @@ export default {
 
     checkForm() {
       if (this.valid) {
-        if (this.tip > 0) {
-          this.$store.dispatch('addToCart', {
-            id: 'tip',
-            name: 'tip',
-            price: Number(this.tip),
-            quantity: 1,
-            cheese: null,
-            peppers: null,
-            addOns: [],
-            without: [],
-          })
-        }
         this.$store.dispatch('setOrderDetails', {
           name: this.name,
           phone: this.phone,
@@ -457,6 +444,7 @@ export default {
           peppers: null,
           addOns: [],
           without: [],
+          casnExpand: false,
         })
       }
     },
@@ -479,8 +467,4 @@ export default {
 }
 </script>
 
-<style lang="scss">
-label.v-label {
-  font-weight: 500;
-}
-</style>
+<style lang="scss"></style>

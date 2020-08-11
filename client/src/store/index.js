@@ -11,7 +11,7 @@ export default new Vuex.Store({
     cart: [],
     orderDetails: {},
     loading: false,
-    loadMessage: '',
+    loadMessage: 'Loading',
     locations: [
       {
         name: 'Sisters',
@@ -131,7 +131,6 @@ export default new Vuex.Store({
         }
       }
       state.cart.push(item)
-      console.log(state.cart)
     },
     REMOVE_FROM_CART(state, item) {
       let itemIdx = state.cart.indexOf(item)

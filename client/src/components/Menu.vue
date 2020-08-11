@@ -1,9 +1,15 @@
 <template>
-  <v-expansion-panels class="mx-auto" v-model="panel" focusable accordion>
+  <v-expansion-panels
+    class="mx-auto"
+    min-width="200"
+    v-model="panel"
+    focusable
+    accordion
+  >
     <v-expansion-panel v-for="category in menu" :key="category.id">
       <v-expansion-panel-header
         class="grey--text text--darken-4 font-weight-bold"
-        style="font-size:1.1rem"
+        style=""
       >
         {{ category.name }}
         <template v-slot:actions>

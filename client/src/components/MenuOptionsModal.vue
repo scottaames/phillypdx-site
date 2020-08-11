@@ -3,26 +3,33 @@
     <v-card-title>
       <span class="font-weight-bold">Customize</span>
     </v-card-title>
-    <v-card-text class="     pb-0">
+    <v-card-text class="pb-0">
       <v-container>
         <v-row no-gutters>
           <v-col v-if="item.options.extraMeats" cols="12">
             <v-row no-gutters align="baseline" justify="space-between">
-              <v-col cols="12" sm="4" md="2"
+              <v-col
+                v-if="!this.$vuetify.breakpoint.mobile"
+                cols="12"
+                sm="4"
+                md="2"
                 ><p class=" text-body-2 grey--text text--darken-4">
                   Extra Meat
                 </p></v-col
               >
               <v-col cols="12" sm="8" md="9">
                 <v-select
-                  dense
+                  :label="this.$vuetify.breakpoint.mobile ? 'Extra Meat' : ''"
+                  :placeholder="
+                    this.$vuetify.breakpoint.mobile
+                      ? 'Select additional meat'
+                      : ''
+                  "
                   outlined
                   :menu-props="{ offsetY: true }"
                   v-model="extraMeatsSelected"
-                  class="text-body-2"
                   :items="extraMeats"
                   multiple
-                  style="font-size:0.9rem"
                 >
                   <template v-slot:selection="{ item, index }">
                     <v-chip small style="margin:0 2px;">
@@ -45,21 +52,30 @@
           </v-col>
           <v-col v-if="typeof item.options.extras !== 'undefined'" cols="12">
             <v-row no-gutters align="baseline" justify="space-between">
-              <v-col cols="12" sm="4" md="2"
+              <v-col
+                v-if="!this.$vuetify.breakpoint.mobile"
+                cols="12"
+                sm="4"
+                md="2"
                 ><p class=" text-body-2 grey--text text--darken-4">
                   Extra Toppings
                 </p></v-col
               >
               <v-col cols="12" sm="8" md="9">
                 <v-select
-                  dense
+                  :label="
+                    this.$vuetify.breakpoint.mobile ? 'Extra Toppings' : ''
+                  "
+                  :placeholder="
+                    this.$vuetify.breakpoint.mobile
+                      ? 'Select additional toppings'
+                      : ''
+                  "
                   outlined
                   :menu-props="{ offsetY: true }"
                   v-model="extraToppingsSelected"
-                  class="text-body-2"
                   :items="item.options.extras"
                   multiple
-                  style="font-size:0.9rem"
                 >
                   <template v-slot:selection="{ item, index }">
                     <v-chip small style="margin:0 2px;">
@@ -82,20 +98,29 @@
           </v-col>
           <v-col v-if="typeof item.options.peppers !== 'undefined'" cols="12">
             <v-row no-gutters align="baseline" justify="space-between">
-              <v-col cols="12" sm="4" md="auto"
+              <v-col
+                v-if="!this.$vuetify.breakpoint.mobile"
+                cols="12"
+                sm="4"
+                md="auto"
                 ><p class=" text-body-2 grey--text text--darken-4">
                   Choose Peppers
                 </p></v-col
               >
               <v-col cols="12" sm="8" md="9">
                 <v-select
-                  dense
+                  :label="
+                    this.$vuetify.breakpoint.mobile ? 'Choose Peppers' : ''
+                  "
+                  :placeholder="
+                    this.$vuetify.breakpoint.mobile
+                      ? 'Select type of pepper'
+                      : ''
+                  "
                   outlined
                   :menu-props="{ offsetY: true }"
                   v-model="peppersSelected"
-                  class="text-body-2"
                   :items="item.options.peppers"
-                  style="font-size:0.9rem"
                 >
                 </v-select>
               </v-col>
@@ -103,20 +128,27 @@
           </v-col>
           <v-col v-if="typeof item.options.cheese !== 'undefined'" cols="12">
             <v-row no-gutters align="baseline" justify="space-between">
-              <v-col cols="12" sm="4" md="auto"
+              <v-col
+                v-if="!this.$vuetify.breakpoint.mobile"
+                cols="12"
+                sm="4"
+                md="auto"
                 ><p class=" text-body-2 grey--text text--darken-4">
                   Extra Cheese
                 </p></v-col
               >
               <v-col cols="12" sm="8" md="9">
                 <v-select
-                  dense
                   outlined
                   :menu-props="{ offsetY: true }"
                   v-model="cheeseSelected"
-                  class="text-body-2"
+                  :label="this.$vuetify.breakpoint.mobile ? 'Extra Cheese' : ''"
+                  :placeholder="
+                    this.$vuetify.breakpoint.mobile
+                      ? 'Select type of cheese'
+                      : ''
+                  "
                   :items="item.options.cheese"
-                  style="font-size:0.9rem"
                 >
                   <template v-slot:selection="{ item }">
                     <v-chip small style="margin:0 2px;">
@@ -133,7 +165,11 @@
           </v-col>
           <v-col cols="12">
             <v-row no-gutters align="baseline" justify="space-between">
-              <v-col cols="12" sm="4" md="2"
+              <v-col
+                v-if="!this.$vuetify.breakpoint.mobile"
+                cols="12"
+                sm="4"
+                md="2"
                 ><p class=" text-body-2 grey--text text--darken-4">
                   Without
                 </p></v-col
@@ -141,13 +177,16 @@
               <v-col cols="12" sm="8" md="9">
                 <v-select
                   :menu-props="{ offsetY: true }"
-                  dense
                   outlined
+                  :label="this.$vuetify.breakpoint.mobile ? 'Without' : ''"
+                  :placeholder="
+                    this.$vuetify.breakpoint.mobile
+                      ? 'Select ingredient(s)'
+                      : ''
+                  "
                   v-model="withoutSelected"
-                  class="text-body-2"
                   :items="item.options.without"
                   multiple
-                  style="font-size:0.9rem"
                 >
                   <template v-slot:selection="{ item }">
                     <v-chip small style="margin:0 2px;">
@@ -163,38 +202,39 @@
     </v-card-text>
     <v-divider></v-divider>
     <v-card-actions>
-      <v-btn class="ml-2" text @click="$emit('update:isOpen', false)"
+      <v-btn
+        :small="this.$vuetify.breakpoint.mobile"
+        class="ml-2"
+        text
+        @click="$emit('update:isOpen', false)"
         >Cancel</v-btn
       >
       <v-spacer></v-spacer>
-      <v-row no-gutters align="center" justify="end">
-        <v-col cols="3">
-          <v-text-field
-            outlined
-            dense
-            type="number"
-            :min="1"
-            :max="9"
-            v-model="quantity"
-            label="Quantity"
-            class="text-body-2 qty-input"
-            style="font-size:0.9rem"
-          >
-          </v-text-field>
-        </v-col>
-        <v-col cols="auto" class="mx-2">
-          <v-btn
-            depressed
-            color="secondary"
-            class="text-subtitle-2 font-weight-bold"
-            dark
-            @click="addToCart"
-          >
-            <v-icon>mdi-cart-plus</v-icon>
-            <strong class="pl-1">{{ formatPrice(getTotalPrice) }}</strong>
-          </v-btn>
-        </v-col>
-      </v-row>
+      <div class="d-flex">
+        <v-text-field
+          outlined
+          dense
+          type="number"
+          :min="1"
+          :max="9"
+          v-model="quantity"
+          label="Qty"
+          class="qty-input"
+        >
+        </v-text-field>
+
+        <v-btn
+          height="35"
+          depressed
+          color="secondary"
+          class="text-subtitle-2 font-weight-sm-bold mx-2"
+          dark
+          @click="addToCart"
+        >
+          <v-icon v-if="!this.$vuetify.breakpoint.mobile">mdi-cart-plus</v-icon>
+          <strong class="pl-sm-1">{{ formatPrice(getTotalPrice) }}</strong>
+        </v-btn>
+      </div>
     </v-card-actions>
   </v-card>
 </template>
@@ -318,10 +358,22 @@ export default {
 </script>
 
 <style lang="scss">
+@media screen and (min-width: 601px) {
+  .qty-input .v-input__control,
+  .qty-input .v-input__slot {
+    height: 40px !important;
+    max-height: 40px !important;
+    min-height: 40px !important;
+    max-width: 75px !important;
+    min-width: 60px !important;
+  }
+}
 .qty-input .v-input__control,
 .qty-input .v-input__slot {
-  height: 40px !important;
-  max-height: 40px !important;
-  min-height: 40px !important;
+  height: 35px !important;
+  max-height: 35px !important;
+  min-height: 35px !important;
+  max-width: 75px !important;
+  min-width: 60px !important;
 }
 </style>

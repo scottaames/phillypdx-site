@@ -48,7 +48,11 @@ export default {
       return window.innerWidth * 0.004
     },
     dialogSize() {
-      return window.innerWidth * 0.12
+      if (!this.$vuetify.breakpoint.mobile) {
+        return window.innerWidth * 0.2
+      } else {
+        return '75%'
+      }
     },
     ...loading,
     ...loadMessage,
