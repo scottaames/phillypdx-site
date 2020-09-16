@@ -109,7 +109,11 @@ const generateResponse = (intent) => {
   }
 }
 
-app.listen(4242, () => console.log(`Node server listening on port ${4242}!`))
+let port = process.env.PORT
+if (port == null || port == '') {
+  port = 4242
+}
+app.listen(port)
 
 /* app.get('/create-payment-intent', async (req, res) => {
   const items = req.body.cart
