@@ -1,79 +1,64 @@
 <template>
-  <v-footer :absolute="!this.$vuetify.breakpoint.mobile" padless color="white">
-    <v-container>
-      <v-divider class="grey lighten-1"></v-divider>
+  <v-footer
+    class="d-flex justify-center align-center"
+    absolute
+    padless
+    :height="this.$vuetify.breakpoint.mobile ? '110' : '165'"
+    width="400"
+    color="white"
+  >
+    <div class="price-container text-center">
+      <div class="price-title ">
+        Subtotal
+      </div>
+      <v-fade-transition leave-absolute>
+        <div
+          class="price-number transition-fast-out-slow-in "
+          :key="`total-${cartPrice}`"
+        >
+          {{ formatPrice(cartPrice - this.getTip) }}
+        </div>
+      </v-fade-transition>
 
-      <v-row
-        no-gutters
-        justify="center"
-        align="end"
-        class="text-body-sm-1 mt-2"
-      >
-        <v-col cols="4" sm="3" class="text-end">
-          Subtotal:
-        </v-col>
-        <v-col offset="1" cols="3">
-          <v-fade-transition leave-absolute>
-            <span
-              class="transition-fast-out-slow-in"
-              :key="`total-${cartPrice}`"
-            >
-              {{ formatPrice(cartPrice - this.getTip) }}
-            </span>
-          </v-fade-transition>
-        </v-col>
-      </v-row>
+      <br />
 
-      <v-row no-gutters justify="center" align="end" class="text-body-sm-1">
-        <v-col cols="4" sm="3" class="text-end">
-          Tip:
-        </v-col>
-        <v-col offset="1" cols="3">
-          <v-fade-transition leave-absolute>
-            <span
-              class="transition-fast-out-slow-in"
-              :key="`total-${cartPrice}`"
-            >
-              {{ formatPrice(this.getTip) }}
-            </span>
-          </v-fade-transition>
-        </v-col>
-      </v-row>
+      <div class="price-title">
+        Tip
+      </div>
+      <v-fade-transition leave-absolute>
+        <div
+          class="price-number transition-fast-out-slow-in "
+          :key="`total-${cartPrice}`"
+        >
+          {{ formatPrice(this.getTip) }}
+        </div>
+      </v-fade-transition>
 
-      <v-row no-gutters justify="center" align="end" class="text-body-sm-1">
-        <v-col cols="4" sm="3" class="text-end">
-          Tax:
-        </v-col>
-        <v-col offset="1" cols="3">
-          {{ formatPrice(0) }}
-        </v-col>
-      </v-row>
-      <v-row no-gutters justify="center" align="center" class="text-body-2">
-        <v-col cols="6" sm="5">
-          <v-divider class="grey lighten-1 my-1"></v-divider>
-        </v-col>
-      </v-row>
+      <br />
 
-      <v-row
-        no-gutters
-        justify="center"
-        class="text-body-sm-1 font-weight-bold"
-      >
-        <v-col cols="4" sm="3" class="text-end">
-          Total:
-        </v-col>
-        <v-col offset="1" cols="3" class="font-weight-bold">
-          <v-fade-transition leave-absolute>
-            <span
-              class="transition-fast-out-slow-in"
-              :key="`total-${cartPrice}`"
-            >
-              {{ formatPrice(cartPrice) }}
-            </span>
-          </v-fade-transition>
-        </v-col>
-      </v-row>
-    </v-container>
+      <div class="price-title">
+        Tax
+      </div>
+      <div class="price-number">
+        {{ formatPrice(0) }}
+      </div>
+
+      <br />
+      <br />
+
+      <div class="price-title price-title--total">
+        Total
+      </div>
+
+      <v-fade-transition leave-absolute>
+        <div
+          class="price-number price-number--total transition-fast-out-slow-in"
+          :key="`total-${cartPrice}`"
+        >
+          {{ formatPrice(cartPrice) }}
+        </div>
+      </v-fade-transition>
+    </div>
   </v-footer>
 </template>
 
@@ -89,6 +74,7 @@ export default {
       }).format(amount)
     },
   },
+
   watch: {
     //cart: 'getTipAmount',
   },
@@ -111,4 +97,67 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+.price-container {
+  font-weight: 400;
+  letter-spacing: 0.1666666667em !important;
+  line-height: 1rem;
+  text-transform: uppercase;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 0.78rem !important;
+  position: relative;
+  width: 55vw;
+  height: 80px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.price-title {
+  position: absolute;
+  display: inline-block;
+  width: 50%;
+  right: 50%;
+  text-align: start;
+  &--total {
+    font-size: 1rem !important;
+    font-weight: 600;
+  }
+}
+.price-number {
+  position: absolute;
+  display: inline-block;
+  width: 50%;
+  left: 50%;
+  text-align: end;
+  &--total {
+    font-size: 1rem !important;
+    font-weight: 600;
+  }
+}
+
+@media screen and (min-width: 651px) {
+  .price-container {
+    font-size: 0.82rem !important;
+    line-height: 1.333333rem;
+    position: relative;
+    width: 190px !important;
+    height: 133px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  .price-title {
+    position: absolute;
+    display: inline-block;
+    width: 50%;
+    right: 50%;
+    text-align: start;
+  }
+  .price-number {
+    position: absolute;
+    display: inline-block;
+    width: 50%;
+    left: 50%;
+    text-align: end;
+  }
+}
+</style>

@@ -9,6 +9,9 @@ export const cart = {
 export const cartPrice = {
   ...mapGetters(['cartPrice']),
 }
+export const cartPriceFormatted = {
+  ...mapGetters(['cartPriceFormatted']),
+}
 export const loadMessage = {
   ...mapGetters(['loadMessage']),
 }

@@ -1,6 +1,7 @@
 <template>
-  <v-container>
-    <v-card max-width="850" class="mx-auto">
+  <v-container class="px-md-10">
+    <ErrorModal :error="error" v-bind:open.sync="errorModalOpen" />
+    <v-card max-width="850" width="100%" class="mx-auto" outlined>
       <v-form ref="form" lazy-validation v-model="valid">
         <v-card-subtitle
           class="ml-2 grey--text text--darken-2 font-weight-bold pb-sm-0"
@@ -145,6 +146,7 @@
             <v-col cols="12" sm="6">
               <v-select
                 outlined
+                ref="tipSelection"
                 v-model="presetTipSelected"
                 :items="presetTips"
                 v-on:input="getPresetTip"
@@ -194,8 +196,10 @@
       >
         PAYMENT
       </v-card-subtitle>
-
-      <v-card-text class="px-sm-8 pt-1 ">
+      <v-card-text class="px-sm-8 pt-1">
+        <CardInstructions />
+      </v-card-text>
+      <v-card-text class="px-sm-8 pt-1">
         <v-stripe-card
           outlined
           ref="stripeCard"
@@ -207,32 +211,12 @@
           :customStyle="{ base: { iconColor: 'rgba(0, 0, 0, 0.54)' } }"
           hideIcon
           placeholder="####"
-          :error-messages="errors"
           :loading="false"
         ></v-stripe-card>
-        <v-img contain class="pb-0 mt-0" height="26" :src="stripeLogoSolid" />
-        <br />
+        <a target="_blank" href="https://stripe.com/">
+          <v-img contain class="pb-0 mt-0" height="26" :src="stripeLogoSolid" />
+        </a>
       </v-card-text>
-      <v-divider></v-divider>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn
-          class="font-weight-bold mr-3"
-          @click="$emit('update:currentStep', currentStep - 1)"
-          text
-        >
-          Back
-        </v-btn>
-
-        <v-btn
-          class="font-weight-bold mr-5"
-          color="secondary"
-          @click="checkForm"
-          depressed
-        >
-          Pay now
-        </v-btn>
-      </v-card-actions>
     </v-card>
   </v-container>
 </template>
@@ -240,6 +224,8 @@
 <script>
 import { cart, cartPrice } from '../store/helpers'
 import { format, add } from 'date-fns'
+import CardInstructions from '@/components/CardInstructions.vue'
+import ErrorModal from '@/components/ErrorModal.vue'
 import PaymentService from '../services/PaymentService'
 import stripeLogoSolid from '../assets/powered_by_stripe.svg'
 import stripeLogoOutlined from '../assets/powered_by_stripe_outlined.svg'
@@ -255,7 +241,10 @@ export default {
       required: true,
     },
   },
-
+  components: {
+    CardInstructions,
+    ErrorModal,
+  },
   created() {
     this.hours =
       this.location.toLowerCase() === 'portland'
@@ -276,14 +265,19 @@ export default {
         : Number(todayHrs[1].substr(0, 2))
     this.close = String(this.closeHour).concat(':00')
   },
+  mounted() {
+    this.isMounted = true
+  },
   data: () => ({
+    errorModalOpen: false,
+    isMounted: false,
     stripeLogoSolid: stripeLogoSolid,
     stripeLogoOutlined: stripeLogoOutlined,
     stripeKey: process.env.VUE_APP_STRIPE_PUBLISHABLE_KEY,
     cardSource: null,
     clientSecret: null,
     paymentIntent: null,
-    errors: [],
+    error: '',
     instructions: null,
     hours: null,
     openHour: 0,
@@ -335,8 +329,9 @@ export default {
       })
       await PaymentService.createPaymentIntent(this.cart).then((result) => {
         if (result.data.error) {
-          this.errors.push(result.data.error)
+          this.error = result.data.error
           this.$store.dispatch('setLoading', { load: false, message: '' })
+          this.errorModalOpen = true
           console.log(result.data.error)
         } else {
           this.confirmCardPayment(result.data.clientSecret)
@@ -352,11 +347,16 @@ export default {
           card: this.$refs.stripeCard.card,
         },
         save_payment_method: false,
+        receipt_email: this.email,
       })
       if (error) {
-        this.errors.push(error)
-        this.$store.dispatch('setLoading', { load: false, message: '' })
-        console.log(error)
+        this.error = error.message
+        this.$store.dispatch('setLoading', {
+          load: false,
+          message: '',
+        })
+        this.errorModalOpen = true
+        console.log(error.message)
       } else if (paymentIntent && paymentIntent.status === 'succeeded') {
         console.log(paymentIntent)
         this.paymentIntent = paymentIntent
@@ -379,6 +379,7 @@ export default {
           phone: this.phone,
           email: this.email,
           orderMethod: this.orderMethod,
+          location: this.location,
           day: this.day,
           time: this.time,
           instructions: this.instructions,
@@ -388,11 +389,6 @@ export default {
       } else {
         this.$refs.form.validate()
       }
-    },
-    fillTestCardData() {
-      this.$refs.cardNumber.value = 4242424242424242
-      this.$refs.cardExpiration = 1122
-      this.$refs.cardCvc = 321
     },
     formatTimeInput() {
       let hours = this.selectedTime.substr(0, 2)
@@ -406,7 +402,11 @@ export default {
         .replace(hours, String(numHours))
         .concat(suffix)
     },
-
+    resetTipFields() {
+      this.$refs.tipSelection.value = ''
+      this.presetTipSelected = ''
+      this.tip = 0
+    },
     allowedHours() {
       if (this.location.toLowerCase() === 'sisters') {
         return (v) => v >= 11 && v <= 19
@@ -444,12 +444,13 @@ export default {
           peppers: null,
           addOns: [],
           without: [],
-          casnExpand: false,
+          canExpand: false,
         })
       }
     },
     resetForm() {
       this.$refs.form.reset()
+      this.$store.$dispatch('clearCart')
     },
   },
   computed: {

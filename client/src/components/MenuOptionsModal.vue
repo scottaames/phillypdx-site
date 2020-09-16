@@ -5,197 +5,108 @@
     </v-card-title>
     <v-card-text class="pb-0">
       <v-container>
-        <v-row no-gutters>
+        <v-row no-gutters justify="center">
           <v-col v-if="item.options.extraMeats" cols="12">
-            <v-row no-gutters align="baseline" justify="space-between">
-              <v-col
-                v-if="!this.$vuetify.breakpoint.mobile"
-                cols="12"
-                sm="4"
-                md="2"
-                ><p class=" text-body-2 grey--text text--darken-4">
-                  Extra Meat
-                </p></v-col
-              >
-              <v-col cols="12" sm="8" md="9">
-                <v-select
-                  :label="this.$vuetify.breakpoint.mobile ? 'Extra Meat' : ''"
-                  :placeholder="
-                    this.$vuetify.breakpoint.mobile
-                      ? 'Select additional meat'
-                      : ''
-                  "
-                  outlined
-                  :menu-props="{ offsetY: true }"
-                  v-model="extraMeatsSelected"
-                  :items="extraMeats"
-                  multiple
-                >
-                  <template v-slot:selection="{ item, index }">
-                    <v-chip small style="margin:0 2px;">
-                      {{ item }}
-                    </v-chip>
+            <v-select
+              label="Extra Meat"
+              placeholder="Select additional meat"
+              outlined
+              :menu-props="{ offsetY: true }"
+              v-model="extraMeatsSelected"
+              :items="extraMeats"
+              multiple
+            >
+              <template v-slot:selection="{ item, index }">
+                <v-chip small style="margin:0 2px;">
+                  {{ item }}
+                </v-chip>
 
-                    <span
-                      v-if="
-                        extraMeatsSelected.length &&
-                          index === extraMeatsSelected.length - 1
-                      "
-                      class="grey--text text--darken-1 ml-2"
-                    >
-                      +{{ formatPrice(getMeatsPrice) }}
-                    </span>
-                  </template>
-                </v-select>
-              </v-col>
-            </v-row>
+                <span
+                  v-if="
+                    extraMeatsSelected.length &&
+                      index === extraMeatsSelected.length - 1
+                  "
+                  class="grey--text text--darken-1 ml-2"
+                >
+                  +{{ formatPrice(getMeatsPrice) }}
+                </span>
+              </template>
+            </v-select>
           </v-col>
           <v-col v-if="typeof item.options.extras !== 'undefined'" cols="12">
-            <v-row no-gutters align="baseline" justify="space-between">
-              <v-col
-                v-if="!this.$vuetify.breakpoint.mobile"
-                cols="12"
-                sm="4"
-                md="2"
-                ><p class=" text-body-2 grey--text text--darken-4">
-                  Extra Toppings
-                </p></v-col
-              >
-              <v-col cols="12" sm="8" md="9">
-                <v-select
-                  :label="
-                    this.$vuetify.breakpoint.mobile ? 'Extra Toppings' : ''
-                  "
-                  :placeholder="
-                    this.$vuetify.breakpoint.mobile
-                      ? 'Select additional toppings'
-                      : ''
-                  "
-                  outlined
-                  :menu-props="{ offsetY: true }"
-                  v-model="extraToppingsSelected"
-                  :items="item.options.extras"
-                  multiple
-                >
-                  <template v-slot:selection="{ item, index }">
-                    <v-chip small style="margin:0 2px;">
-                      {{ item }}
-                    </v-chip>
+            <v-select
+              label="Extra toppings"
+              placeholder="Select additional toppings"
+              outlined
+              :menu-props="{ offsetY: true }"
+              v-model="extraToppingsSelected"
+              :items="item.options.extras"
+              multiple
+            >
+              <template v-slot:selection="{ item, index }">
+                <v-chip small style="margin:0 2px;">
+                  {{ item }}
+                </v-chip>
 
-                    <span
-                      v-if="
-                        extraToppingsSelected.length &&
-                          index === extraToppingsSelected.length - 1
-                      "
-                      class="grey--text text--darken-1 ml-2"
-                    >
-                      +{{ formatPrice(getToppingsPrice) }}
-                    </span>
-                  </template>
-                </v-select>
-              </v-col>
-            </v-row>
+                <span
+                  v-if="
+                    extraToppingsSelected.length &&
+                      index === extraToppingsSelected.length - 1
+                  "
+                  class="grey--text text--darken-1 ml-2"
+                >
+                  +{{ formatPrice(getToppingsPrice) }}
+                </span>
+              </template>
+            </v-select>
           </v-col>
           <v-col v-if="typeof item.options.peppers !== 'undefined'" cols="12">
-            <v-row no-gutters align="baseline" justify="space-between">
-              <v-col
-                v-if="!this.$vuetify.breakpoint.mobile"
-                cols="12"
-                sm="4"
-                md="auto"
-                ><p class=" text-body-2 grey--text text--darken-4">
-                  Choose Peppers
-                </p></v-col
-              >
-              <v-col cols="12" sm="8" md="9">
-                <v-select
-                  :label="
-                    this.$vuetify.breakpoint.mobile ? 'Choose Peppers' : ''
-                  "
-                  :placeholder="
-                    this.$vuetify.breakpoint.mobile
-                      ? 'Select type of pepper'
-                      : ''
-                  "
-                  outlined
-                  :menu-props="{ offsetY: true }"
-                  v-model="peppersSelected"
-                  :items="item.options.peppers"
-                >
-                </v-select>
-              </v-col>
-            </v-row>
+            <v-select
+              label="Peppers"
+              placeholder="Select pepper type"
+              outlined
+              :menu-props="{ offsetY: true }"
+              v-model="peppersSelected"
+              :items="item.options.peppers"
+            >
+            </v-select>
           </v-col>
           <v-col v-if="typeof item.options.cheese !== 'undefined'" cols="12">
-            <v-row no-gutters align="baseline" justify="space-between">
-              <v-col
-                v-if="!this.$vuetify.breakpoint.mobile"
-                cols="12"
-                sm="4"
-                md="auto"
-                ><p class=" text-body-2 grey--text text--darken-4">
-                  Extra Cheese
-                </p></v-col
-              >
-              <v-col cols="12" sm="8" md="9">
-                <v-select
-                  outlined
-                  :menu-props="{ offsetY: true }"
-                  v-model="cheeseSelected"
-                  :label="this.$vuetify.breakpoint.mobile ? 'Extra Cheese' : ''"
-                  :placeholder="
-                    this.$vuetify.breakpoint.mobile
-                      ? 'Select type of cheese'
-                      : ''
-                  "
-                  :items="item.options.cheese"
-                >
-                  <template v-slot:selection="{ item }">
-                    <v-chip small style="margin:0 2px;">
-                      {{ item }}
-                    </v-chip>
+            <v-select
+              outlined
+              :menu-props="{ offsetY: true }"
+              v-model="cheeseSelected"
+              label="Extra Cheese"
+              placeholder="Select type of cheese"
+              :items="item.options.cheese"
+            >
+              <template v-slot:selection="{ item }">
+                <v-chip small style="margin:0 2px;">
+                  {{ item }}
+                </v-chip>
 
-                    <span class="grey--text text--darken-1 ml-2">
-                      +{{ formatPrice(1) }}
-                    </span>
-                  </template>
-                </v-select>
-              </v-col>
-            </v-row>
+                <span class="grey--text text--darken-1 ml-2">
+                  +{{ formatPrice(1) }}
+                </span>
+              </template>
+            </v-select>
           </v-col>
           <v-col cols="12">
-            <v-row no-gutters align="baseline" justify="space-between">
-              <v-col
-                v-if="!this.$vuetify.breakpoint.mobile"
-                cols="12"
-                sm="4"
-                md="2"
-                ><p class=" text-body-2 grey--text text--darken-4">
-                  Without
-                </p></v-col
-              >
-              <v-col cols="12" sm="8" md="9">
-                <v-select
-                  :menu-props="{ offsetY: true }"
-                  outlined
-                  :label="this.$vuetify.breakpoint.mobile ? 'Without' : ''"
-                  :placeholder="
-                    this.$vuetify.breakpoint.mobile
-                      ? 'Select ingredient(s)'
-                      : ''
-                  "
-                  v-model="withoutSelected"
-                  :items="item.options.without"
-                  multiple
-                >
-                  <template v-slot:selection="{ item }">
-                    <v-chip small style="margin:0 2px;">
-                      {{ item }}
-                    </v-chip>
-                  </template>
-                </v-select>
-              </v-col>
-            </v-row>
+            <v-select
+              :menu-props="{ offsetY: true }"
+              outlined
+              label="Without"
+              placeholder="Select ingredient(s)"
+              v-model="withoutSelected"
+              :items="item.options.without"
+              multiple
+            >
+              <template v-slot:selection="{ item }">
+                <v-chip small style="margin:0 2px;">
+                  {{ item }}
+                </v-chip>
+              </template>
+            </v-select>
           </v-col>
         </v-row>
       </v-container>
@@ -222,18 +133,34 @@
           class="qty-input"
         >
         </v-text-field>
-
-        <v-btn
-          height="35"
-          depressed
-          color="secondary"
-          class="text-subtitle-2 font-weight-sm-bold mx-2"
-          dark
-          @click="addToCart"
-        >
-          <v-icon v-if="!this.$vuetify.breakpoint.mobile">mdi-cart-plus</v-icon>
-          <strong class="pl-sm-1">{{ formatPrice(getTotalPrice) }}</strong>
-        </v-btn>
+        <v-hover v-slot:default="{ hover }">
+          <v-btn
+            height="35"
+            width="125"
+            depressed
+            color="secondary"
+            class="font-weight-sm-bold mx-2"
+            dark
+            @click="addToCart"
+          >
+            <template v-slot:default>
+              <div v-if="hover">
+                <v-slide-x-transition hide-on-leave>
+                  <span :key="1">
+                    {{ formatPrice(getTotalPrice) }}
+                  </span>
+                </v-slide-x-transition>
+              </div>
+              <div v-else>
+                <v-slide-x-reverse-transition hide-on-leave>
+                  <span>
+                    Add to cart
+                  </span>
+                </v-slide-x-reverse-transition>
+              </div>
+            </template>
+          </v-btn>
+        </v-hover>
       </div>
     </v-card-actions>
   </v-card>

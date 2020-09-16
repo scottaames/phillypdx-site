@@ -1,5 +1,6 @@
 import Home from '../views/Home.vue'
-import Order from '../views/Order.vue'
+import Locations from '@/views/Locations.vue'
+import OrderNew from '../views/OrderNew.vue'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import goTo from 'vuetify/es5/services/goto'
@@ -13,9 +14,14 @@ const routes = [
     component: Home,
   },
   {
+    path: '/locations',
+    name: 'locations',
+    component: Locations,
+  },
+  {
     path: '/order/:location',
     name: 'order',
-    component: Order,
+    component: OrderNew,
     props: true,
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route

@@ -136,7 +136,7 @@ export default {
         class: 'text-subtitle-2 grey--text text--darken-4',
       },
       {
-        text: 'Actions',
+        text: '',
         sortable: false,
         value: 'actions',
         align: 'end',

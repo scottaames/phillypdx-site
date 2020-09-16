@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog v-model="openModal" :scrollable="false" max-width="700">
+    <v-dialog v-model="openModal" :scrollable="false" max-width="500">
       <MenuOptionsModal :item="menuItem" v-bind:isOpen.sync="openModal" />
     </v-dialog>
 
@@ -23,28 +23,6 @@
             Add to cart
           </v-overlay>
         </v-fade-transition>
-        <!-- <div v-if="!isMobile">
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-subtitle
-                class="grey--text text--darken-3 font-weight-medium"
-                v-text="menuItem.name"
-              ></v-list-item-subtitle>
-            </v-list-item-content>
-            <v-list-item-action>
-              <v-list-item-action-text
-                class="font-weight-bold text-subtitle-2 grey--text text--darken-3 "
-                >{{ '$' + menuItem.price }}</v-list-item-action-text
-              >
-            </v-list-item-action>
-          </v-list-item>
-          <v-card-text
-            class="pt-0"
-            style="max-width: 90%"
-            v-text="menuItem.description"
-          >
-          </v-card-text>
-        </div> -->
 
         <div>
           <v-card-subtitle
@@ -73,25 +51,6 @@
             </v-btn>
           </v-card-actions>
         </div>
-
-        <!--   <v-row no-gutters align="start" justify="space-between">
-          <v-col cols="12" class="grey--text text--darken-4">
-            {{ menuItem.name }}
-          </v-col>
-          <v-col cols="12" sm="10">
-            <div class="grey--text text--darken-3 text-body-2 mb-1">
-              {{ menuItem.description }}
-            </div>
-          </v-col>
-          <v-col cols="12" sm="2" class="d-flex justify-end">
-            <strong class="grey--text text--darken-4">{{
-              new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD',
-              }).format(menuItem.price.toFixed(2))
-            }}</strong>
-          </v-col>
-        </v-row> -->
       </v-card>
     </v-hover>
   </div>

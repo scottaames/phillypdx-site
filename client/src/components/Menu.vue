@@ -8,19 +8,9 @@
   >
     <v-expansion-panel v-for="category in menu" :key="category.id">
       <v-expansion-panel-header
-        class="grey--text text--darken-4 font-weight-bold"
-        style=""
+        class="grey--text text--darken-4 font-weight-medium"
       >
         {{ category.name }}
-        <template v-slot:actions>
-          <v-icon
-            :color="panel == category.id - 1 ? 'red darken-1' : 'primary'"
-          >
-            {{
-              panel == category.id - 1 ? 'mdi-minus-circle' : 'mdi-plus-circle'
-            }}
-          </v-icon>
-        </template>
       </v-expansion-panel-header>
       <v-divider v-if="category.id != 8"></v-divider>
 

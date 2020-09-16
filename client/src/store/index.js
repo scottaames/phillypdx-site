@@ -4,12 +4,23 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+const ZERO_CART_PRICE = -9999
+
 export default new Vuex.Store({
   state: () => ({
     menu: [],
     cartPrice: 0,
     cart: [],
-    orderDetails: {},
+    orderDetails: {
+      name: 'Scott Ames',
+      phone: '(951) 541-1070',
+      email: 'scottaames@gmail.com',
+      orderMethod: 'Pick-up',
+      location: 'Portland',
+      day: 'Today',
+      time: '11:35AM',
+      instructions: 'Please remember to leave off the onions!',
+    },
     loading: false,
     loadMessage: 'Loading',
     locations: [
@@ -143,7 +154,8 @@ export default new Vuex.Store({
       state.cartPrice += amount
     },
     SUBTRACT_CART_PRICE(state, amount) {
-      state.cartPrice -= amount
+      state.cartPrice =
+        amount === ZERO_CART_PRICE ? 0 : state.cartPrice - amount
     },
     SET_LOADING(state, isLoading) {
       state.loading = isLoading
@@ -181,8 +193,9 @@ export default new Vuex.Store({
       commit('REMOVE_FROM_CART', item)
       dispatch('subtractCartPrice', item.price)
     },
-    clearCart({ commit }, item) {
-      commit('CLEAR_CART', item)
+    clearCart({ commit }) {
+      commit('CLEAR_CART')
+      commit('SUBTRACT_CART_PRICE', ZERO_CART_PRICE)
     },
     addCartPrice({ commit }, amount) {
       commit('ADD_CART_PRICE', amount)
@@ -195,6 +208,12 @@ export default new Vuex.Store({
     },
   },
   getters: {
+    cartPriceFormatted: (state) => {
+      new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      }).format(state.cartPrice)
+    },
     locations: (state) => state.locations,
     sistersHours: (state) => state.locations[0].hours,
     portlandHours: (state) => state.locations[1].hours,

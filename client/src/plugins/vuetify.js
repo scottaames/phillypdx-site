@@ -15,12 +15,22 @@ export default new Vuetify({
   theme: {
     themes: {
       dark: {
-        primary: '#3F51B5',
+        primary: '#264653',
         secondary: '#28602F',
+        tertiary: '#779cab',
+        yellowish: '#e9c46a',
+        orangish: '#F4A261',
+        reddish: '#E76F51',
+        peach: '#F9E7E4',
       },
       light: {
-        primary: '#3F51B5',
+        primary: '#264653',
         secondary: '#28602F',
+        tertiary: '#779cab',
+        yellowish: '#e9c46a',
+        orangish: '#F4A261',
+        reddish: '#E76F51',
+        peach: '#F9E7E4',
       },
     },
   },

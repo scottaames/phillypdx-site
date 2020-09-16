@@ -1,11 +1,13 @@
 <template>
-  <v-card class="mx-auto location-card mt-0 mb-8 pb-4 neomorphed">
+  <v-card
+    class="elevation-12 mx-lg-none mx-auto location-card mt-0 mb-8 pb-3 rounded-xl"
+  >
     <v-row>
       <v-col cols="12" md="6" lg="12">
         <v-card-title class="justify-center">
           {{ location.name + ', OR' }}
         </v-card-title>
-        <v-card-text class="pb-1 mx-xs-3 px-xs-3 mx-0 px-0">
+        <v-card-text class="pb-1 mx-0 px-0">
           <iframe
             frameborder="0"
             width="100%"
@@ -35,15 +37,14 @@
             ></v-img>
           </v-btn>
         </v-card-actions>
-        <v-card-actions class="pb-0">
+        <v-card-actions class="justify-center pb-0">
           <v-btn
-            class="mx-lg-auto button-shake-anim"
-            :block="this.$vuetify.breakpoint.mdAndDown"
+            class="wiggle"
+            block
             :to="`/order/${location.name}`"
-            depressed
             large
             color="secondary"
-            >Order now at {{ location.name }} location</v-btn
+            >Order Online</v-btn
           >
         </v-card-actions>
       </v-col>
@@ -175,62 +176,29 @@ export default {
 </script>
 
 <style lang="scss">
-@keyframes shake {
-  10%,
-  90% {
-    transform: translate3d(-1px, 0, 0);
-    opacity: 0.9;
-  }
-
-  20%,
-  80% {
-    transform: translate3d(2px, 0, 0);
-    opacity: 0.8;
-  }
-
-  30%,
-  50%,
-  70% {
-    transform: translate3d(-3px, 0, 0);
-  }
-
-  30%,
-  60% {
-    transform: translate3d(3px, 0, 0);
-  }
-}
+@import '../sass/animations.scss';
 
 .location-card {
-  max-width: 400px;
+  max-width: 400px !important;
 }
 
-@media screen and (min-width: 1264px) {
-  .location-card {
-    max-width: 500px;
-  }
-  .button-shake-anim {
-    animation: shake;
-    animation-timing-function: cubic-bezier(0.36, 0.07, 0.19, 0.97);
-    animation-delay: 8s;
-    animation-duration: 1s;
-    animation-iteration-count: 1;
-    animation-fill-mode: both;
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    perspective: 100px;
-    opacity: 1;
-  }
-}
-@media screen and (min-width: 961px) {
-  .location-card {
-    max-width: 800px;
-    min-width: 500px;
-  }
-}
 @media screen and (min-width: 601px) {
   .location-card {
-    max-width: 500px;
-    margin: 0 25px;
+    max-width: 500px !important;
+    min-width: 300px !important;
+  }
+}
+
+@media screen and (min-width: 961px) {
+  .location-card {
+    max-width: 800px !important;
+    min-width: 500px !important;
+  }
+}
+@media screen and (min-width: 1264px) {
+  .location-card {
+    max-width: 450px !important;
+    min-width: 300px !important;
   }
 }
 </style>
