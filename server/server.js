@@ -1,6 +1,5 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const morgan = require('morgan')
 const env = require('dotenv').config({ path: './.env' })
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 const cors = require('cors')
@@ -9,13 +8,13 @@ const { resolve } = require('path')
 const menuDb = require('./db/menu.json')
 
 const app = express()
+app.use('/', serveStatic(path.join('../client', '/dist')))
 
-app.use(morgan('tiny'))
 app.use(bodyParser.json())
 app.use(cors())
 
-app.get('/', (req, res) => {
-  res.send('hi')
+app.get(/.*/, function (req, res) {
+  res.sendFile(path.join('../client', '/dist/index.html'))
 })
 
 app.get('/menu', (req, res) => {
@@ -114,16 +113,3 @@ if (port == null || port == '') {
   port = 4242
 }
 app.listen(port)
-
-/* app.get('/create-payment-intent', async (req, res) => {
-  const items = req.body.cart
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: calculateOrderAmount(items),
-    currency: 'usd',
-  })
-  res.send({ clientSecret: paymentIntent.client_secret })
-})
-
-app.listen(process.env.PORT || 8000, () => {
-  console.log('Node server listening on port 8000')
-}) */
