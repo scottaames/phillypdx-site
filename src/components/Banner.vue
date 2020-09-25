@@ -24,23 +24,30 @@
       absolute
     >
       <div>
-        <h1 class="display-4 mt-2 shadowed font-weight-medium">Welcome to</h1>
+        <h1
+          class="text-sm-h2 text-md-h1 text-h3 mt-2 shadowed font-weight-medium"
+        >
+          Welcome to
+        </h1>
         <v-img
-          height="225"
+          :aspect-ratio="319 / 170"
           contain
-          class="my-4"
+          max-width="375"
+          class="mx-10 mx-sm-auto my-8"
           src="http://phillypdx.net/wp-content/uploads/2020/01/8723604.png"
         ></v-img>
-        <h3 class="text-h4 shadowed mb-8">
+        <h3 class="text-sm-h4 text-h5 font-weight-medium shadowed mb-8">
           Family-owned and operated since 1987
         </h3>
-        <v-btn to="/order" class="mr-1" large color="secondary" depressed
-          >Place an order</v-btn
-        >
-        <v-btn to="#locations" class="ml-1" large color="black" depressed
-          >View locations</v-btn
-        >
       </div>
+      <v-btn
+        to="#locations"
+        active-class="secondary"
+        :x-large="this.$vuetify.breakpoint.lgAndUp"
+        :large="this.$vuetify.breakpoint.mdAndDown"
+        color="secondary"
+        >View locations</v-btn
+      >
     </v-overlay>
   </v-window>
 </template>
@@ -55,7 +62,8 @@ export default {
   },
   computed: {
     getWindowHeight() {
-      return window.innerHeight - 64
+      let appbarHeight = this.$vuetify.breakpoint.mobile ? 56 : 64
+      return window.innerHeight - appbarHeight
     },
   },
   data: () => ({
@@ -73,6 +81,7 @@ export default {
 <style lang="sass">
 .shadowed
   text-shadow: black 0.15rem -0.15rem 0.5rem, black -0.15rem 0.15rem 0.5rem
+  font-family: "Calibre Web" !important
 .banner-image
   background-position: center
   background-size: contain

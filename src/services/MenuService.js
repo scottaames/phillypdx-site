@@ -1,8 +1,7 @@
 import axios from 'axios'
 
 const apiClient = axios.create({
-  baseURL: `http://localhost:3000`,
-  withCredentials: false,
+  baseURL: `http://localhost:4242`,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -12,8 +11,5 @@ const apiClient = axios.create({
 export default {
   getMenu() {
     return apiClient.get('/menu')
-  },
-  getMenuItem(id) {
-    return apiClient.get('/menu/' + id)
   },
 }

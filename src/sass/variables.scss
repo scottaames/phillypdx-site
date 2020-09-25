@@ -3,7 +3,8 @@
 @import '~vuetify/src/styles/tools/_functions.sass';
 @import '~vuetify/src/styles/settings/_variables.scss';
 
-$title-font-family: 'Permanent Marker', cursive !default;
+$title-font-family: 'Calibre' !default;
+$heading-font-family: $title-font-family !default;
 $body-font-family: 'Roboto', sans-serif !default;
 $grid-breakpoints: () !default;
 
@@ -82,7 +83,7 @@ $headings: map-deep-merge(
       'weight': normal,
       'line-height': 1.75rem,
       'letter-spacing': 0.009375em,
-      'font-family': $body-font-family,
+      'font-family': $heading-font-family,
       'text-transform': false,
     ),
     'subtitle-2': (
@@ -90,7 +91,7 @@ $headings: map-deep-merge(
       'weight': 500,
       'line-height': 1.375rem,
       'letter-spacing': 0.0071428571em,
-      'font-family': $body-font-family,
+      'font-family': $heading-font-family,
       'text-transform': false,
     ),
     'body-1': (

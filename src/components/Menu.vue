@@ -1,34 +1,21 @@
 <template>
   <v-expansion-panels
-    style="max-width:750px"
     class="mx-auto"
+    min-width="200"
     v-model="panel"
     focusable
     accordion
   >
-    <v-expansion-panel
-      v-for="category in this.$store.state.menu"
-      :key="category.id"
-    >
+    <v-expansion-panel v-for="category in menu" :key="category.id">
       <v-expansion-panel-header
-        class="grey--text text--darken-4 font-weight-bold"
-        style="font-size:1.1rem"
+        class="grey--text text--darken-4 font-weight-medium"
       >
         {{ category.name }}
-        <template v-slot:actions>
-          <v-icon
-            :color="panel == category.id - 1 ? 'red darken-1' : 'primary'"
-          >
-            {{
-              panel == category.id - 1 ? 'mdi-minus-circle' : 'mdi-plus-circle'
-            }}
-          </v-icon>
-        </template>
       </v-expansion-panel-header>
-      <v-divider></v-divider>
+      <v-divider v-if="category.id != 8"></v-divider>
 
       <v-expansion-panel-content>
-        <div v-for="item in category.items" :key="item.name">
+        <div v-for="(item, index) in category.items" :key="index">
           <MenuItemCard :menuItem="item" />
           <v-divider></v-divider>
         </div>
@@ -39,6 +26,7 @@
 
 <script>
 import MenuItemCard from '@/components/MenuItemCard.vue'
+import { menu } from '@/store/helpers'
 
 export default {
   components: {
@@ -56,6 +44,7 @@ export default {
     icon() {
       return this.isOpen ? 'mdi-minus-circle' : 'mdi-plus-circle'
     },
+    ...menu,
   },
 }
 </script>

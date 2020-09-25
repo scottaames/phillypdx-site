@@ -4,21 +4,25 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+const ZERO_CART_PRICE = -9999
+
 export default new Vuex.Store({
   state: () => ({
     menu: [],
     cartPrice: 0,
     cart: [],
-    lineItems: [],
     orderDetails: {
       name: 'Scott Ames',
       phone: '(951) 541-1070',
       email: 'scottaames@gmail.com',
       orderMethod: 'Pick-up',
+      location: 'Portland',
       day: 'Today',
-      time: '12:36 PM',
-      instructions: 'Make sure to leave off the onions please!',
+      time: '11:35AM',
+      instructions: 'Please remember to leave off the onions!',
     },
+    loading: false,
+    loadMessage: 'Loading',
     locations: [
       {
         name: 'Sisters',
@@ -97,16 +101,24 @@ export default new Vuex.Store({
     },
     ADD_TO_CART(state, item) {
       let repeats = state.cart.filter((cartItem) => cartItem.name === item.name)
-      let isRepeat = true
       if (repeats.length > 0) {
+        if (item.name === 'tip') {
+          let idx = state.cart.indexOf(item)
+          Object.assign(state.cart[idx].price, item.price)
+          return
+        }
+        let isRepeat
         let i = 0
         while (i < repeats.length) {
+          isRepeat = true
           if (repeats[i].price === item.price) {
             if (
-              repeats[i].addOns != null &&
-              item.addOns != null &&
+              repeats[i].addOns.length &&
+              item.addOns.length &&
               repeats[i].addOns.length === item.addOns.length &&
-              repeats[i].without.length === item.without.length
+              repeats[i].without.length === item.without.length &&
+              item.cheese === repeats[i].cheese &&
+              item.peppers === repeats[i].cheese
             ) {
               item.addOns.forEach((addOn, index) => {
                 if (addOn.name !== repeats[i].addOns[index].name) {
@@ -118,13 +130,15 @@ export default new Vuex.Store({
                   isRepeat = false
                 }
               })
-            }
-            if (isRepeat) {
-              let idx = state.cart.indexOf(repeats[i])
-              state.cart[idx].quantity += item.quantity
-              return
+
+              if (isRepeat) {
+                let idx = state.cart.indexOf(repeats[i])
+                state.cart[idx].quantity += item.quantity
+                return
+              }
             }
           }
+          i++
         }
       }
       state.cart.push(item)
@@ -140,20 +154,37 @@ export default new Vuex.Store({
       state.cartPrice += amount
     },
     SUBTRACT_CART_PRICE(state, amount) {
-      state.cartPrice -= amount
+      state.cartPrice =
+        amount === ZERO_CART_PRICE ? 0 : state.cartPrice - amount
+    },
+    SET_LOADING(state, isLoading) {
+      state.loading = isLoading
+    },
+    SET_LOAD_MSG(state, message) {
+      state.loadMessage = message
     },
   },
   actions: {
     async fetchMenu({ commit }) {
       return await MenuService.getMenu()
         .then((response) => {
-          commit('SET_MENU', response.data)
+          commit('SET_MENU', response.data.menu)
         })
         .catch((error) => {
           console.log('Error fetching menu: ', error.response)
         })
     },
-
+    setLoadMessage({ commit }, message) {
+      commit('SET_LOAD_MSG', message)
+    },
+    async setLoading({ dispatch, commit }, isLoading) {
+      if (isLoading.message.length > 0) {
+        await dispatch('setLoadMessage', isLoading.message)
+        commit('SET_LOADING', isLoading.load)
+      } else {
+        commit('SET_LOADING', isLoading.load)
+      }
+    },
     addToCart({ dispatch, commit }, item) {
       commit('ADD_TO_CART', item)
       dispatch('addCartPrice', item.price)
@@ -162,8 +193,9 @@ export default new Vuex.Store({
       commit('REMOVE_FROM_CART', item)
       dispatch('subtractCartPrice', item.price)
     },
-    clearCart({ commit }, item) {
-      commit('CLEAR_CART', item)
+    clearCart({ commit }) {
+      commit('CLEAR_CART')
+      commit('SUBTRACT_CART_PRICE', ZERO_CART_PRICE)
     },
     addCartPrice({ commit }, amount) {
       commit('ADD_CART_PRICE', amount)
@@ -176,6 +208,12 @@ export default new Vuex.Store({
     },
   },
   getters: {
+    cartPriceFormatted: (state) => {
+      new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      }).format(state.cartPrice)
+    },
     locations: (state) => state.locations,
     sistersHours: (state) => state.locations[0].hours,
     portlandHours: (state) => state.locations[1].hours,
@@ -184,6 +222,8 @@ export default new Vuex.Store({
     cart: (state) => state.cart,
     cartPrice: (state) => state.cartPrice,
     orderDetails: (state) => state.orderDetails,
+    loading: (state) => state.loading,
+    loadMessage: (state) => state.loadMessage,
   },
   modules: {},
 })
