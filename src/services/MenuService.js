@@ -1,15 +1,16 @@
 import axios from 'axios'
 
-const apiClient = axios.create({
-  baseURL: `http://localhost:4242`,
+const options = {
+  url: `https://phillypdx-site.herokuapp.com/menu`,
+  method: 'GET',
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   },
-})
+}
 
 export default {
   getMenu() {
-    return apiClient.get('/menu')
+    return axios(options)
   },
 }
