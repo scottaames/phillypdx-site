@@ -1,14 +1,24 @@
 {
   "name": "phillypdx-site",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.9.0",
+  "description": "A remake of Philadelphia's Steaks and Hoagies website, with a modern look and feel.",
+  "author": "Scott Ames",
+  "license": "MIT",
+  "private": false,
+  "main": "server.js",
+  "keywords": [
+    "vue",
+    "phillypdx",
+    "scottaames",
+    "vuetify"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
-    "server-dev": "nodemon --watch server/server.js",
+    "dev": "nodemon --watch server/server.js & npm run serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "db": "json-server ./db/menu.json 3000",
-    "start": "node server.js"
+    "start": "node server.js",
+    "heroku-push": "git push heroku master"
   },
   "dependencies": {
     "axios": "^0.19.2",
@@ -56,5 +66,8 @@
       "docs/*"
     ],
     "delay": "2000"
+  },
+  "engines": {
+    "node": "12.x"
   }
 }
