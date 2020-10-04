@@ -155,7 +155,7 @@ export default {
 </style>
 
 <style lang="sass">
-@import './sass/all.scss
+@import './sass/all.sass'
 
 body
   overflow: hidden
