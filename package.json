@@ -29,7 +29,7 @@
     "epic-spinners": "^1.1.0",
     "express": "^4.17.1",
     "morgan": "^1.10.0",
-    "redis": "^3.0.2",
+    "redis": "^3.1.1",
     "serve-static": "^1.14.1",
     "stripe": "^8.79.0",
     "v-mask": "^2.2.3",
